@@ -553,6 +553,38 @@
         color: rgba(80, 24, 36, 0.88);
       }
 
+      .mine-line,
+      .mine-sub {
+        display: none;
+      }
+
+      .mine-line {
+        font-family: "Great Vibes", cursive;
+        font-size: 62px;
+        line-height: 1.05;
+        color: #9a2848;
+        text-shadow: 0 8px 24px rgba(196, 60, 90, 0.16);
+      }
+
+      .mine-sub {
+        margin-top: 10px;
+        font-family: "Dancing Script", cursive;
+        font-size: 26px;
+        color: rgba(120, 40, 60, 0.82);
+      }
+
+      .gate.answered .gate-ask,
+      .gate.answered .gate-actions,
+      .gate.answered .gate-tease {
+        display: none;
+      }
+
+      .gate.answered .mine-line,
+      .gate.answered .mine-sub {
+        display: block;
+        animation: fadeInUp 0.8s ease forwards;
+      }
+
       .gate-actions {
         position: relative;
         min-height: 92px;
@@ -691,6 +723,15 @@
       .entrance-overlay.hidden {
         opacity: 0;
         pointer-events: none;
+      }
+
+      .entrance-overlay.hold {
+        pointer-events: none;
+        cursor: default;
+      }
+
+      .entrance-overlay.hold .tap-text {
+        display: none;
       }
 
       .entrance-overlay .intro-text {
@@ -947,6 +988,12 @@
         .gate-ask {
           font-size: 24px;
         }
+        .mine-line {
+          font-size: 46px;
+        }
+        .mine-sub {
+          font-size: 22px;
+        }
         .yes-btn {
           min-width: 132px;
           font-size: 28px;
@@ -981,9 +1028,9 @@
     <!-- First question -->
     <div class="gate" id="gate">
       <div class="gate-card">
-        <p class="gate-kicker">a little something</p>
-        <h1 class="gate-title">For you, Mummu</h1>
-        <p class="gate-ask">Do you want to open it?</p>
+        <!-- <p class="gate-kicker">a little something</p> -->
+        <!-- <h1 class="gate-title">For you, Mummu</h1> -->
+        <p class="gate-ask">Can I Keep You Forever? 🥹 </p>
         <div class="gate-actions">
           <button class="yes-btn" id="yesBtn" type="button">Yes</button>
           <button class="no-btn" id="noBtn" type="button" tabindex="-1">
@@ -991,6 +1038,8 @@
           </button>
         </div>
         <p class="gate-tease" id="gateTease">one answer is feeling brave</p>
+        <p class="mine-line">So you're mine, right?</p>
+        <p class="mine-sub">😜</p>
       </div>
       <div class="poppers" id="poppers" aria-hidden="true"></div>
     </div>
@@ -1048,7 +1097,7 @@
         "
         data-rotate="-2"
       >
-        <div class="proposal-title">Happy Birthday, my Mummu.❤️🥹</div>
+        <div class="proposal-title">Happy Birthday, Mummu.❤️🥹</div>
         <div class="proposal-body">
           You’re the person my heart chose, the one whose happiness will always matter to me. No matter what life has planned for us, I’ll always wish you all the love, happiness, and beautiful things this world has to offer. I hope this year gives you a thousand reasons to smile, and I hope I get to be one of them.
 
@@ -1068,8 +1117,8 @@ I love you, birthday boy, more than words could ever explain. 🫂❤️
         "
         data-rotate="4"
       >
-        <p>My Favorite Person</p>
-        <p class="sub">in the entire universe 😍</p>
+        <p>You, Me - we will figure it out together ... ❤️</p>
+        <!-- <p class="sub">in the entire universe 😍</p> -->
       </div>
 
       <!-- 3. Compliment card -->
@@ -1083,8 +1132,8 @@ I love you, birthday boy, more than words could ever explain. 🫂❤️
         "
         data-rotate="-6"
       >
-        <p class="fancy">You are Amazing</p>
-        <p>Cute, Kind, Perfect <span style="color: #c41e3a">❤️</span></p>
+        <p class="fancy">A  million extra wishes to you ... ❤️</p>
+        <!-- <p>Cute, Kind, Perfect <span style="color: #c41e3a">❤️</span></p> -->
       </div>
 
       <!-- 4. Image card — m1.jpeg -->
@@ -1098,8 +1147,8 @@ I love you, birthday boy, more than words could ever explain. 🫂❤️
         "
         data-rotate="5"
       >
-        <p class="fancy">My whole world</p>
-        <p class="subtitle">every smile of yours lights up my universe ✨</p>
+        <!-- <p class="fancy">My whole world</p> -->
+        <p class="subtitle">It's You, It's always you ... ❤️</p>
         <img src="m1.jpeg" alt="Abiii" />
       </div>
 
@@ -1114,8 +1163,8 @@ I love you, birthday boy, more than words could ever explain. 🫂❤️
         "
         data-rotate="-4"
       >
-        <p class="fancy">So Beautiful</p>
-        <p class="subtitle">how can someone be this cute? ❤️</p>
+        <p class="fancy"></p>
+        <p class="subtitle">Finding you was like coming home ❤️</p>
         <img src="m2.jpeg" alt="Abiii" />
       </div>
 
@@ -1131,8 +1180,8 @@ I love you, birthday boy, more than words could ever explain. 🫂❤️
         data-rotate="3"
       >
         <img src="us.jpeg" alt="Us together" />
-        <div class="us-label">Us Together 💕</div>
-        <div class="us-sub">my favorite place is beside you</div>
+        <div class="us-label"> my favorite place is beside you.. 💕</div>
+        <!-- <div class="us-sub"></div> -->
       </div>
 
       <!-- 7. Heart "I Love You" card — SECOND from top -->
@@ -1312,11 +1361,23 @@ I love you, birthday boy, more than words could ever explain. 🫂❤️
             musicPlaying = false;
             musicBtn.textContent = "▶";
           });
+        gate.classList.add("answered");
         setTimeout(() => {
           gate.classList.add("hidden");
-          entrance.classList.add("hidden");
-          setTimeout(animatePapersIn, 350);
-        }, 900);
+          entrance.classList.add("hold");
+          const intro = entrance.querySelector(".intro-text");
+          const sub = entrance.querySelector(".intro-sub");
+          [intro, sub].forEach((line) => {
+            line.style.animation = "none";
+            void line.offsetWidth;
+            line.style.animation = "fadeInUp 0.8s ease forwards";
+          });
+          setTimeout(() => {
+            entrance.classList.remove("hold");
+            entrance.classList.add("hidden");
+            setTimeout(animatePapersIn, 400);
+          }, 3800);
+        }, 2600);
       });
 
       musicBtn.addEventListener("click", () => {
